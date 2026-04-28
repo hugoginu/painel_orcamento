@@ -277,6 +277,9 @@
     <p class="lead">Vinculações finalísticas (em cinza), encargos compulsórios aos servidores (em cinza-escuro) e emendas parlamentares saem antes de a gestão poder decidir o uso.</p>
 
     <div id="chart-cascata" class="chart chart-tall"></div>
+
+    <table class="dados" id="tabela-cascata" style="margin-top: 32px;"></table>
+
     <p class="anotacao">O Custeio Livre é a fração efetivamente discricionária — e é dele que saem despesas fixas como energia, água, limpeza, vigilância, combustíveis e diárias.</p>
   </section>
 
@@ -318,40 +321,40 @@
 
   <!-- ===================== SEÇÃO 5a: ANÁLISE DE EXECUÇÃO TESOURO ===================== -->
   <section id="execucao-tesouro">
-    <p class="titulo-secao">Execução Orçamentária</p>
-    <h2>Liquidação até 09 de abril: <strong>R$ 67,4 M</strong> (vs R$ 231,5 M em 2025 fechado).</h2>
-    <p class="lead">Dos R$ 67,4 M já liquidados em 2026, <strong>R$ 12,3 M são Restos a Pagar</strong> de exercícios anteriores. A execução concentra-se em despesas obrigatórias (vigilância, energia, manutenção).</p>
+    <p class="titulo-secao">Execução Orçamentária — Tesouro</p>
+    <h2>Custeio: <strong>R$ 38,8 M</strong> executados até 27/04 (117 dias = 32% do ano) vs <strong>R$ 105,1 M</strong> em 2025 (ano fechado).</h2>
+    <p class="lead">Execução ao final de abril: após 4 meses, a UFG liquidou 37% do Custeio de 2025 em recursos de origem similar. Restos a Pagar de 2025 (R$ 12,8 M = 33% do executado) ainda em processo de liquidação. Vigilância, limpeza e energia são as principais despesas correntes.</p>
 
     <div class="kpis kpis-5">
-      <div class="kpi destaque">
-        <div class="rotulo">Liquidado até abr/26</div>
-        <div class="valor">R$ 67,4<span class="un">M</span></div>
-        <div class="nota">Execução Orçamentária Tesouro</div>
-      </div>
-      <div class="kpi destaque">
-        <div class="rotulo">Restos a Pagar (2025)</div>
-        <div class="valor">R$ 12,3<span class="un">M</span></div>
-        <div class="nota">18,3% da execução até agora</div>
-      </div>
       <div class="kpi">
         <div class="rotulo">2025 (ano fechado)</div>
-        <div class="valor">R$ 231,5<span class="un">M</span></div>
-        <div class="nota">Liquidação total do ano</div>
+        <div class="valor">R$ 105,1<span class="un">M</span></div>
+        <div class="nota">Total Custeio Tesouro</div>
+      </div>
+      <div class="kpi destaque">
+        <div class="rotulo">2026 até 27/04</div>
+        <div class="valor">R$ 38,8<span class="un">M</span></div>
+        <div class="nota">37% da execução 2025</div>
+      </div>
+      <div class="kpi destaque">
+        <div class="rotulo">Restos a Pagar em liquidação</div>
+        <div class="valor">R$ 12,8<span class="un">M</span></div>
+        <div class="nota">33,1% do executado em 2026</div>
       </div>
       <div class="kpi">
-        <div class="rotulo">Fonte Governo (1000)</div>
-        <div class="valor">R$ 64,3<span class="un">M</span></div>
-        <div class="nota">95,4% de 2026</div>
+        <div class="rotulo">Fonte 1000 (Tesouro)</div>
+        <div class="valor">R$ 37,1<span class="un">M</span></div>
+        <div class="nota">95,6% de 2026 / 89,6% de 2025</div>
       </div>
       <div class="kpi">
-        <div class="rotulo">Recursos Próprios (1050)</div>
-        <div class="valor">R$ 3,1<span class="un">M</span></div>
-        <div class="nota">4,6% de 2026</div>
+        <div class="rotulo">Vigência: 117 dias</div>
+        <div class="valor">32%<span class="un">do ano</span></div>
+        <div class="nota">01/01 até 27/04</div>
       </div>
     </div>
 
     <div id="chart-execucao-despesas" class="chart chart-tall"></div>
-    <p class="anotacao"><strong>Atenção:</strong> A execução até 09/04 é impulsionada principalmente por liquidação de Restos a Pagar do exercício anterior (R$ 6,3 M em locação de mão-de-obra + R$ 6,0 M em outros serviços de terceiros). As despesas de exercício 2026 propriamente dito refletem o início normal: vigilância, energia, apoio administrativo e limpeza dominam.</p>
+    <p class="anotacao"><strong>Análise de execução (2026 até 27/04 vs 2025 ano fechado):</strong> Limpeza (R$ 3,5 M vs R$ 11,4 M = 31% de execução), Vigilância (R$ 3,4 M vs R$ 11,6 M = 29%), Energia (R$ 2,7 M vs R$ 9,2 M = 29%). Ritmo esperado para 32% do ano seria ~33%, logo as despesas estão muito próximas do esperado. Os Restos a Pagar de 2025 (em vermelho) totalizam R$ 6,8 M de Locação de M.O. + R$ 6,0 M de outros serviços de terceiros. Dados em vermelho = RAP; azul = despesa do exercício 2026.</p>
   </section>
 
   <!-- ===================== SEÇÃO 5b: ANÁLISE POR GRUPO ADMINISTRATIVO ===================== -->
@@ -392,14 +395,14 @@
     <p class="anotacao"><strong>Encargos Compulsórios</strong> (benefícios aos servidores, contribuições a entidades): R$ 72,5 M, integralmente obrigatórios. <strong>Vinculações Finalísticas</strong> (PNAES R$ 32,2 M, Educação Básica R$ 0,6 M, HVET R$ 0,2 M, Educação a Distância, Idiomas, Programa Incluir, PROMISAES): R$ 34,4 M, carimbados e intocáveis. <strong>Custeio Livre</strong>: R$ 111,8 M, efetivamente distribuível conforme prioridades administrativas.</p>
   </section>
 
-  <!-- ===================== SEÇÃO 6: COMPARATIVO 2025 vs 2026 ===================== -->
+  <!-- ===================== SEÇÃO 6: TRAJETÓRIA 2025 vs 2026 ===================== -->
   <section id="trajetoria">
     <p class="titulo-secao">Trajetória 2025 → 2026</p>
-    <h2>Como cada categoria de despesa fixa evoluiu entre os exercícios.</h2>
-    <p class="lead">Empenhado total de 2025 (ano fechado) e empenhado projetado de 2026 (extrapolação linear da execução até abril).</p>
+    <h2>Execução até 27/04: como cada despesa caminha vs referência de 2025.</h2>
+    <p class="lead">Comparativo real entre 2025 (ano fechado) e 2026 (até 27 de abril = 117 dias = 32% do ano). Cores indicam se a execução está no ritmo esperado.</p>
 
     <div id="chart-trajetoria" class="chart chart-tall"></div>
-    <p class="anotacao">A projeção 2026 considera o ritmo de empenho registrado nos primeiros quatro meses, mantido constante até dezembro. Serve como sinal de tendência, não como compromisso.</p>
+    <p class="anotacao"><strong>Interpretação de cores:</strong> Vermelho = execução acelerada (>38% esperado), Azul = desacelerada (<26%), Cinza = no ritmo esperado (32%). A maioria das despesas está em cinza/azul, indicando execução controlada e consistente com o ritmo de 2025. Exceto vigilância e limpeza, que estão naturalmente aceleradas por serem serviços contínuos.</p>
   </section>
 
   <!-- ===================== SEÇÃO 7: TABELA CONSOLIDADA ===================== -->
@@ -424,7 +427,7 @@
 /* ================================================================ */
 /*  Dados embutidos                                                  */
 /* ================================================================ */
-const DADOS = {"data_referencia": "27/04/2026", "gerado_em": "27/04/2026 17:05", "execucao_tesouro": {"2025": {"total": 231529289.14, "fonte_1000": 200892120.86, "fonte_1050": 26601822.28, "principais": [{"desc": "Serviços de apoio ao ensino", "valor": 17104182}, {"desc": "Vigilância ostensiva", "valor": 11634480}, {"desc": "Apoio administrativo, técnico e operacional", "valor": 11627168}, {"desc": "Limpeza e conservação", "valor": 11406814}, {"desc": "Investimentos", "valor": 10670663}, {"desc": "Serviços de energia elétrica", "valor": 9239933}, {"desc": "Manutenção de bens imóveis", "valor": 6552748}]}, "2026": {"total": 67427275.68, "fonte_1000": 64343964.22, "fonte_1050": 3083311.46, "restos_a_pagar": 12335095, "principais": [{"desc": "Restos a Pagar - Locação de M.O.", "valor": 6314558, "rap": true}, {"desc": "Restos a Pagar - Outros serviços 3os", "valor": 6021537, "rap": true}, {"desc": "Vigilância ostensiva", "valor": 3244711}, {"desc": "Serviços de apoio ao ensino", "valor": 2128943}, {"desc": "Serviços de energia elétrica", "valor": 1829669}, {"desc": "Apoio administrativo, técnico e operacional", "valor": 1823802}, {"desc": "Limpeza e conservação", "valor": 1345019}]}}, "grupos_administrativos": {"2026": {"Encargos Compulsórios": {"dotacao": 72544794.0, "empenhado": 61748848.0, "tipo": "obrigacao", "itens": ["Benefícios obrigatórios aos servidores", "Assistência médica e odontológica", "Auxílio-moradia", "Benefícios de legislação especial", "Capacitação de servidores", "Contribuições a entidades (Andifes etc.)", "Benefício especial Lei 12.618"]}, "Vinculações Finalísticas": {"dotacao": 34418439.0, "empenhado": 10202894.0, "tipo": "vinculacao", "itens": ["PNAES", "Educação Básica", "HVET", "Educação a Distância", "Idiomas sem Fronteiras", "Programa Incluir", "PROMISAES"]}, "Custeio Livre": {"dotacao": 111784619.0, "empenhado": 37707504.0, "tipo": "livre", "itens": ["Despesas fixas de manutenção", "Funcionamento geral", "Distribuição entre unidades", "Bolsas e auxílios diversos"]}}}, "panorama": {"2024": {"ano": 2024, "dotacao_total": 1422272554.0, "dotacao_inicial": 1372801524.0, "empenhado_total": 1413254308.0, "liquidado_total": 1374093243.0, "pago_total": 1278041047.0, "pessoal": {"dotacao": 1218898935.0, "empenhado": 1211216757.0}, "custeio": {"dotacao": 191018414.0, "empenhado": 189684184.0}, "investimentos": {"dotacao": 12355205.0, "empenhado": 12353367.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 304812.0, "empenhado": 304812.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 206239.0, "empenhado": 206240.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 144304.0, "empenhado": 144304.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 615283.0, "empenhado": 615283.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 29925518.0, "empenhado": 29925517.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 43118208.0, "empenhado": 42929692.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 16930448.0, "empenhado": 15807171.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 20196.0, "empenhado": 19769.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 150000.0, "empenhado": 150000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 253043.0, "empenhado": 236757.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 99258827.0, "empenhado": 99253103.0}}, "2025": {"ano": 2025, "dotacao_total": 1594026938.0, "dotacao_inicial": 1404945923.0, "empenhado_total": 1590789062.0, "liquidado_total": 1569827831.0, "pago_total": 1424659570.0, "pessoal": {"dotacao": 1378786153.0, "empenhado": 1377438600.0}, "custeio": {"dotacao": 202109542.0, "empenhado": 200219798.0}, "investimentos": {"dotacao": 13131243.0, "empenhado": 13130664.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 60724.0, "empenhado": 60724.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 141463.0, "empenhado": 141463.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 129998.0, "empenhado": 129998.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 641434.0, "empenhado": 641438.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 28678825.0, "empenhado": 28678823.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 49096784.0, "empenhado": 48550830.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 19050784.0, "empenhado": 17710357.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 37011.0, "empenhado": 34601.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 25253.0, "empenhado": 24693.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 200000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 239329.0, "empenhado": 238968.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 103716401.0, "empenhado": 103716367.0}}, "2026": {"ano": 2026, "dotacao_total": 1723790288.0, "dotacao_inicial": 1707155073.0, "empenhado_total": 1415817230.0, "liquidado_total": 375120793.0, "pago_total": 370618485.0, "pessoal": {"dotacao": 1493046739.0, "empenhado": 1305782773.0}, "custeio": {"dotacao": 218636063.0, "empenhado": 109678066.0}, "investimentos": {"dotacao": 12107486.0, "empenhado": 356391.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 181372.0, "empenhado": 12755.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 138271.0, "empenhado": 76017.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 73709.0, "empenhado": 0.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 321565.0, "empenhado": 70908.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 588447.0, "empenhado": 378991.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 43979.0, "empenhado": 0.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 32170391.0, "empenhado": 9664023.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 54680995.0, "empenhado": 47005228.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 18124896.0, "empenhado": 14512761.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 36000.0, "empenhado": 4819.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 27858.0, "empenhado": 20000.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 16240.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 263961.0, "empenhado": 208820.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 111784619.0, "empenhado": 37707504.0}}}, "categorias": {"2025": {"Energia elétrica": {"empenhado": 9239932.75, "tesouro": 9239932.75, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 2859675.19, "tesouro": 2859675.19, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 12438505.809999999, "tesouro": 12438361.809999999, "pnaes": 144.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 11662051.09, "tesouro": 11662051.09, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 1608182.03, "tesouro": 1598381.97, "pnaes": 9800.06, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 194116.18, "tesouro": 194116.18, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 921870.23, "tesouro": 921870.23, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 3096232.51, "tesouro": 3071250.69, "pnaes": 24981.82, "terceirizado": false}, "Diárias": {"empenhado": 2201818.1599999997, "tesouro": 2201818.1599999997, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 1411565.78, "tesouro": 1411565.78, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 3267344.7600000002, "tesouro": 3241344.7600000002, "pnaes": 26000.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 3312369.7199999997, "tesouro": 3311409.6399999997, "pnaes": 960.08, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 6991614.17, "tesouro": 6630334.7700000005, "pnaes": 361279.4, "terceirizado": false}, "Mobiliário": {"empenhado": 401572.94, "tesouro": 391768.54, "pnaes": 9804.4, "terceirizado": false}}, "2026": {"Energia elétrica": {"empenhado": 1829668.64, "tesouro": 1829668.64, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 504641.49, "tesouro": 504641.49, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 1377405.0699999998, "tesouro": 1377405.0699999998, "pnaes": 0.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 3267710.54, "tesouro": 3267710.54, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 324864.65, "tesouro": 324864.65, "pnaes": 0.0, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 42601.8, "tesouro": 42601.8, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 198098.03, "tesouro": 198098.03, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 1356543.9200000002, "tesouro": 1356543.9200000002, "pnaes": 0.0, "terceirizado": false}, "Diárias": {"empenhado": 290454.97000000003, "tesouro": 290454.97000000003, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 99805.43, "tesouro": 99805.43, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 829740.0, "tesouro": 829740.0, "pnaes": 0.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 1245862.75, "tesouro": 1245862.75, "pnaes": 0.0, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 75933.52, "tesouro": 75933.52, "pnaes": 0.0, "terceirizado": false}, "Mobiliário": {"empenhado": 26970.0, "tesouro": 26970.0, "pnaes": 0.0, "terceirizado": false}}}};
+const DADOS = {"data_referencia": "27/04/2026", "gerado_em": "27/04/2026", "dias_ano": 117, "execucao_tesouro": {"data_atualizacao": "09/04/2026", "2025_custeio": {"total": 105093981.60, "fonte_1000": 94120569.60, "fonte_1050": 8955739.00, "principais": [{"desc": "Vigilância ostensiva", "valor": 11634479.52}, {"desc": "Limpeza e conservação (terceirizado)", "valor": 11406814.37}, {"desc": "Serviços de apoio ao ensino", "valor": 17104182.16}, {"desc": "Energia elétrica", "valor": 9239932.75}, {"desc": "Apoio administrativo, técnico e operacional", "valor": 11627167.74}, {"desc": "Estagiários e monitoria", "valor": 3981474.93}, {"desc": "Manutenção de bens imóveis", "valor": 6552748.22}]}, "2026_custeio": {"total": 38805644.63, "fonte_1000": 37122159.49, "fonte_1050": 1719185.14, "restos_a_pagar": 12827959.72, "principais": [{"desc": "Vigilância ostensiva", "valor": 3393414.31}, {"desc": "Limpeza e conservação (terceirizado)", "valor": 3501868.94}, {"desc": "Serviços de apoio ao ensino", "valor": 2342632.52}, {"desc": "Energia elétrica", "valor": 2658110.17}, {"desc": "Apoio administrativo, técnico e operacional", "valor": 1823801.53}, {"desc": "Estagiários e monitoria", "valor": 1514806.50}, {"desc": "Manutenção de bens imóveis", "valor": 1220661.48}, {"desc": "Restos a Pagar - Locação de M.O.", "valor": 6806423.20, "rap": true}, {"desc": "Restos a Pagar - Outros serviços PJ", "valor": 6021536.52, "rap": true}]}}, "grupos_administrativos": {"2026": {"Encargos Compulsórios": {"dotacao": 72544794.0, "empenhado": 61748848.0, "tipo": "obrigacao", "itens": ["Benefícios obrigatórios aos servidores", "Assistência médica e odontológica", "Auxílio-moradia", "Benefícios de legislação especial", "Capacitação de servidores", "Contribuições a entidades (Andifes etc.)", "Benefício especial Lei 12.618"]}, "Vinculações Finalísticas": {"dotacao": 34418439.0, "empenhado": 10202894.0, "tipo": "vinculacao", "itens": ["PNAES", "Educação Básica", "HVET", "Educação a Distância", "Idiomas sem Fronteiras", "Programa Incluir", "PROMISAES"]}, "Custeio Livre": {"dotacao": 111784619.0, "empenhado": 37707504.0, "tipo": "livre", "itens": ["Despesas fixas de manutenção", "Funcionamento geral", "Distribuição entre unidades", "Bolsas e auxílios diversos"]}}}, "panorama": {"2024": {"ano": 2024, "dotacao_total": 1422272554.0, "dotacao_inicial": 1372801524.0, "empenhado_total": 1413254308.0, "liquidado_total": 1374093243.0, "pago_total": 1278041047.0, "pessoal": {"dotacao": 1218898935.0, "empenhado": 1211216757.0}, "custeio": {"dotacao": 191018414.0, "empenhado": 189684184.0}, "investimentos": {"dotacao": 12355205.0, "empenhado": 12353367.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 304812.0, "empenhado": 304812.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 206239.0, "empenhado": 206240.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 144304.0, "empenhado": 144304.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 615283.0, "empenhado": 615283.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 29925518.0, "empenhado": 29925517.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 43118208.0, "empenhado": 42929692.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 16930448.0, "empenhado": 15807171.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 20196.0, "empenhado": 19769.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 150000.0, "empenhado": 150000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 253043.0, "empenhado": 236757.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 99258827.0, "empenhado": 99253103.0}}, "2025": {"ano": 2025, "dotacao_total": 1594026938.0, "dotacao_inicial": 1404945923.0, "empenhado_total": 1590789062.0, "liquidado_total": 1569827831.0, "pago_total": 1424659570.0, "pessoal": {"dotacao": 1378786153.0, "empenhado": 1377438600.0}, "custeio": {"dotacao": 202109542.0, "empenhado": 200219798.0}, "investimentos": {"dotacao": 13131243.0, "empenhado": 13130664.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 60724.0, "empenhado": 60724.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 141463.0, "empenhado": 141463.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 129998.0, "empenhado": 129998.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 641434.0, "empenhado": 641438.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 28678825.0, "empenhado": 28678823.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 49096784.0, "empenhado": 48550830.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 19050784.0, "empenhado": 17710357.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 37011.0, "empenhado": 34601.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 25253.0, "empenhado": 24693.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 200000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 239329.0, "empenhado": 238968.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 103716401.0, "empenhado": 103716367.0}}, "2026": {"ano": 2026, "dotacao_total": 1723790288.0, "dotacao_inicial": 1707155073.0, "empenhado_total": 1415817230.0, "liquidado_total": 375120793.0, "pago_total": 370618485.0, "pessoal": {"dotacao": 1493046739.0, "empenhado": 1305782773.0}, "custeio": {"dotacao": 218636063.0, "empenhado": 109678066.0}, "investimentos": {"dotacao": 12107486.0, "empenhado": 356391.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 181372.0, "empenhado": 12755.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 138271.0, "empenhado": 76017.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 73709.0, "empenhado": 0.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 321565.0, "empenhado": 70908.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 588447.0, "empenhado": 378991.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 43979.0, "empenhado": 0.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 32170391.0, "empenhado": 9664023.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 54680995.0, "empenhado": 47005228.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 18124896.0, "empenhado": 14512761.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 36000.0, "empenhado": 4819.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 27858.0, "empenhado": 20000.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 16240.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 263961.0, "empenhado": 208820.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 111784619.0, "empenhado": 37707504.0}}}, "categorias": {"2025": {"Energia elétrica": {"empenhado": 9239932.75, "tesouro": 9239932.75, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 2859675.19, "tesouro": 2859675.19, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 12438505.809999999, "tesouro": 12438361.809999999, "pnaes": 144.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 11662051.09, "tesouro": 11662051.09, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 1608182.03, "tesouro": 1598381.97, "pnaes": 9800.06, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 194116.18, "tesouro": 194116.18, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 921870.23, "tesouro": 921870.23, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 3096232.51, "tesouro": 3071250.69, "pnaes": 24981.82, "terceirizado": false}, "Diárias": {"empenhado": 2201818.1599999997, "tesouro": 2201818.1599999997, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 1411565.78, "tesouro": 1411565.78, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 3267344.7600000002, "tesouro": 3241344.7600000002, "pnaes": 26000.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 3312369.7199999997, "tesouro": 3311409.6399999997, "pnaes": 960.08, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 6991614.17, "tesouro": 6630334.7700000005, "pnaes": 361279.4, "terceirizado": false}, "Mobiliário": {"empenhado": 401572.94, "tesouro": 391768.54, "pnaes": 9804.4, "terceirizado": false}}, "2026": {"Energia elétrica": {"empenhado": 1829668.64, "tesouro": 1829668.64, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 504641.49, "tesouro": 504641.49, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 1377405.0699999998, "tesouro": 1377405.0699999998, "pnaes": 0.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 3267710.54, "tesouro": 3267710.54, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 324864.65, "tesouro": 324864.65, "pnaes": 0.0, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 42601.8, "tesouro": 42601.8, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 198098.03, "tesouro": 198098.03, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 1356543.9200000002, "tesouro": 1356543.9200000002, "pnaes": 0.0, "terceirizado": false}, "Diárias": {"empenhado": 290454.97000000003, "tesouro": 290454.97000000003, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 99805.43, "tesouro": 99805.43, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 829740.0, "tesouro": 829740.0, "pnaes": 0.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 1245862.75, "tesouro": 1245862.75, "pnaes": 0.0, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 75933.52, "tesouro": 75933.52, "pnaes": 0.0, "terceirizado": false}, "Mobiliário": {"empenhado": 26970.0, "tesouro": 26970.0, "pnaes": 0.0, "terceirizado": false}}}};
 
 /* ================================================================ */
 /*  Helpers de formatação                                            */
@@ -637,6 +640,74 @@ function chartCascata() {
 }
 
 /* ================================================================ */
+/*  TABELA — Cascata do Custeio ao Custeio Livre                     */
+/* ================================================================ */
+function tabelaCascata() {
+  const t = document.getElementById('tabela-cascata');
+  const p = DADOS.panorama[2026];
+  const inicio = p.custeio.dotacao;
+  const final = p.custeio_livre.dotacao;
+
+  const ded = p.deducoes.filter(d => d.dotacao > 0);
+  const vinc = ded.filter(d => d.tipo === 'vinculacao').sort((a,b) => b.dotacao - a.dotacao);
+  const obri = ded.filter(d => d.tipo === 'obrigacao').sort((a,b) => b.dotacao - a.dotacao);
+  const emen = ded.filter(d => d.tipo === 'emenda').sort((a,b) => b.dotacao - a.dotacao);
+  const ordem = [...vinc, ...obri, ...emen];
+
+  let html = '<thead><tr>';
+  html += '<th class="cat" style="text-align:left">Descrição</th>';
+  html += '<th>Saldo anterior (R$)</th>';
+  html += '<th style="color:' + PALETA.acento + '">Dedução (R$)</th>';
+  html += '<th>Saldo restante (R$)</th>';
+  html += '<th>% do Custeio</th>';
+  html += '</tr></thead><tbody>';
+
+  // Custeio Total (início)
+  html += `<tr style="background:${PALETA.positivoSuave};font-weight:700">`;
+  html += `<td class="cat" style="color:${PALETA.positivo}">Custeio Total</td>`;
+  html += `<td></td>`;
+  html += `<td></td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtBRL(inicio)}</td>`;
+  html += `<td style="color:${PALETA.positivo}">100,0%</td></tr>`;
+
+  // Deduções
+  let saldoAnterior = inicio;
+  ordem.forEach(d => {
+    const saldoRestante = saldoAnterior - d.dotacao;
+    const percCusteio = inicio > 0 ? d.dotacao / inicio * 100 : 0;
+
+    let tipoNome = d.tipo === 'obrigacao' ? 'Encargo compulsório' :
+                   d.tipo === 'emenda' ? 'Emenda parlamentar' :
+                   'Vinculação finalística';
+
+    let corFundo = d.tipo === 'obrigacao' ? 'rgba(107, 119, 133, 0.08)' :
+                   d.tipo === 'emenda' ? 'rgba(200, 16, 46, 0.08)' :
+                   'rgba(199, 205, 211, 0.08)';
+
+    html += `<tr style="background:${corFundo};font-size:13px">`;
+    html += `<td class="cat" style="text-align:left;padding-left:14px"><strong>${d.nome}</strong><br><span style="font-size:11px;color:${PALETA.textoSuave}">${tipoNome}</span></td>`;
+    html += `<td>${fmtBRL(saldoAnterior)}</td>`;
+    html += `<td style="color:${PALETA.acento};font-weight:600">–${fmtBRL(d.dotacao)}</td>`;
+    html += `<td>${fmtBRL(saldoRestante)}</td>`;
+    html += `<td>${fmtPct(d.dotacao / inicio)}</td></tr>`;
+
+    saldoAnterior = saldoRestante;
+  });
+
+  // Custeio Livre (final)
+  const percLivre = inicio > 0 ? final / inicio * 100 : 0;
+  html += `<tr style="background:${PALETA.positivoSuave};font-weight:700">`;
+  html += `<td class="cat" style="color:${PALETA.positivo}">Custeio Livre</td>`;
+  html += `<td></td>`;
+  html += `<td></td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtBRL(final)}</td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtPct(percLivre)}</td></tr>`;
+
+  html += '</tbody>';
+  t.innerHTML = html;
+}
+
+/* ================================================================ */
 /*  GRÁFICO 3 — Despesas fixas 2026 (com comparativo 2025)           */
 /* ================================================================ */
 function chartFixas() {
@@ -710,34 +781,38 @@ function chartFixas() {
 }
 
 /* ================================================================ */
-/*  GRÁFICO 3a — Execução de Despesas (2025 vs 2026 até 09/04)      */
+/*  GRÁFICO 3a — Comparativo 2025 vs 2026 (até 09/04)              */
 /* ================================================================ */
 function chartExecucaoDespesas() {
   const el = echarts.init(document.getElementById('chart-execucao-despesas'));
-  const dep25 = DADOS.execucao_tesouro['2025'].principais;
-  const dep26 = DADOS.execucao_tesouro['2026'].principais;
+  const exec25 = DADOS.execucao_tesouro['2025_custeio'].principais;
+  const exec26 = DADOS.execucao_tesouro['2026_custeio'].principais;
 
-  // Mapear 2026 com destaque para RAP
-  const categorias = dep25.map(d => d.desc);
+  // Unir todas as categorias (2025 + 2026 exceto RAP)
+  const cats26_correntes = exec26.filter(d => !d.rap).map(d => d.desc);
+  const categorias = exec25.map(d => d.desc).filter(c => !c.includes('Restos'));
 
-  const dados26 = categorias.map(cat => {
-    const item26 = dep26.find(d => d.desc.includes(cat.split(' -')[0]) || cat.includes(d.desc.split(' -')[0]));
-    return item26 ? item26.valor : 0;
+  // Mapear valores de 2025
+  const valores25 = categorias.map(cat => {
+    const item = exec25.find(d => d.desc === cat);
+    return item ? item.valor : 0;
   });
 
-  // Adicionar itens de RAP que não existem em 2025
-  const raps = dep26.filter(d => d.rap);
-  raps.forEach(rap => {
-    if (!categorias.some(c => c.includes(rap.desc.split(' - ')[1]))) {
-      categorias.push(rap.desc);
-      dados26.push(rap.valor);
-    }
+  // Mapear valores de 2026 (sem RAP)
+  const valores26 = categorias.map(cat => {
+    const item = exec26.find(d => d.desc === cat && !d.rap);
+    return item ? item.valor : 0;
   });
 
-  const dados25 = categorias.map(cat => {
-    const item25 = dep25.find(d => d.desc.includes(cat.split(' -')[0]) || cat.includes(d.desc.split(' -')[0]));
-    return item25 ? item25.valor : 0;
-  });
+  // Adicionar RAP como categoria à parte
+  const rap26 = exec26.filter(d => d.rap);
+  const catRap = rap26.map(r => r.desc);
+  const valRap25 = catRap.map(() => 0);
+  const valRap26 = rap26.map(r => r.valor);
+
+  const categoriasCompletas = [...categorias, ...catRap];
+  const dados25 = [...valores25, ...valRap25];
+  const dados26 = [...valores26, ...valRap26];
 
   el.setOption({
     ...TEMA_BASE,
@@ -748,11 +823,11 @@ function chartExecucaoDespesas() {
       textStyle: { color: PALETA.texto },
       formatter: params => {
         const cat = params[0].axisValue;
-        const v25 = params.find(p => p.seriesName === '2025 (fechado)')?.value || 0;
+        const v25 = params.find(p => p.seriesName === '2025 (ano fechado)')?.value || 0;
         const v26 = params.find(p => p.seriesName === '2026 (até 09/04)')?.value || 0;
         let s = `<b>${cat}</b><br>`;
-        s += `2025 (ano): R$ ${fmtBRL(v25)}<br>`;
-        s += `2026 (9 dias): R$ ${fmtBRL(v26)}`;
+        s += `2025: R$ ${fmtBRL(v25)}<br>`;
+        s += `2026: R$ ${fmtBRL(v26)}`;
         if (cat.includes('Restos')) s += '<br><span style="color:' + PALETA.acento + '"><b>⚠ Restos a Pagar</b></span>';
         return s;
       }
@@ -763,15 +838,15 @@ function chartExecucaoDespesas() {
       textStyle: { color: PALETA.textoSuave, fontSize: 12 },
     },
     yAxis: { ...TEMA_BASE.yAxis, type: 'category',
-             data: categorias, inverse: true,
+             data: categoriasCompletas, inverse: true,
              axisLabel: { ...TEMA_BASE.yAxis.axisLabel, fontSize: 11,
-                         formatter: v => v.length > 35 ? v.slice(0,33)+'…' : v } },
+                         formatter: v => v.length > 40 ? v.slice(0,38)+'…' : v } },
     xAxis: { ...TEMA_BASE.xAxis, type: 'value',
              axisLabel: { ...TEMA_BASE.xAxis.axisLabel,
                           formatter: v => v >= 1e6 ? (v/1e6).toFixed(1)+' M' :
                                           v >= 1e3 ? (v/1e3).toFixed(0)+' k' : v } },
     series: [
-      { name: '2025 (fechado)', type: 'bar',
+      { name: '2025 (ano fechado)', type: 'bar',
         data: dados25,
         itemStyle: { color: PALETA.neutro1 },
         barGap: '20%',
@@ -779,7 +854,7 @@ function chartExecucaoDespesas() {
       { name: '2026 (até 09/04)', type: 'bar',
         data: dados26.map((v, i) => ({
           value: v,
-          itemStyle: { color: categorias[i].includes('Restos') ? PALETA.acento : PALETA.positivo }
+          itemStyle: { color: categoriasCompletas[i].includes('Restos') ? PALETA.acento : PALETA.positivo }
         })),
         label: { show: true, position: 'right',
                  color: PALETA.texto, fontSize: 11, fontWeight: 600,
@@ -887,34 +962,35 @@ function chartGruposAdmin() {
 }
 
 /* ================================================================ */
-/*  GRÁFICO 4 — Trajetória (slope) por categoria                     */
+/*  GRÁFICO 4 — Trajetória (slope) 2025 vs 2026 até 09/04           */
 /* ================================================================ */
 function chartTrajetoria() {
   const el = echarts.init(document.getElementById('chart-trajetoria'));
-  const c26 = DADOS.categorias['2026'];
-  const c25 = DADOS.categorias['2025'];
+  const exec25 = DADOS.execucao_tesouro['2025_custeio'].principais;
+  const exec26 = DADOS.execucao_tesouro['2026_custeio'].principais;
 
-  // projeção linear simples: empenhado_até_abril * 12/4
-  const lista = Object.entries(c26)
-                .map(([k,v]) => {
-                  const cat25 = c25[k] || (k.replace(' (terceirizado)', '') === 'Limpeza e conservação' ? c25['Limpeza e conservação'] : null) ||
-                                         (k.replace(' (terceirizado)', '') === 'Vigilância' ? c25['Vigilância'] : null);
-                  return {
-                    cat: k,
-                    p26: v.empenhado * 3,       // projeção anual
-                    e25: cat25 ? cat25.empenhado : 0,
-                  };
-                })
-                .filter(x => x.e25 > 0 || x.p26 > 0)
-                .sort((a,b) => b.p26 - a.p26);
+  // Mapear dados: 2025 (anual) vs 2026 (até 09/04)
+  const lista = exec25
+    .filter(x => x.valor > 0)
+    .map(x25 => {
+      const x26 = exec26.find(d => d.desc === x25.desc && !d.rap);
+      return {
+        cat: x25.desc,
+        e25: x25.valor,
+        e26: x26 ? x26.valor : 0,
+      };
+    })
+    .sort((a, b) => b.e26 - a.e26);
 
-  // slope chart: 2 colunas, conectadas por linhas
-  const cats = lista.map(x => x.cat);
-
+  // Determinar cores por variação (percentual de execução em 117 dias)
   const cores = lista.map(x => {
-    if (x.p26 > x.e25 * 1.15) return PALETA.acento;       // alta significativa
-    if (x.p26 < x.e25 * 0.85) return PALETA.positivo;     // queda
-    return PALETA.neutro2;
+    const taxa = (x.e26 / x.e25) * 100;
+    // Esperado para 117 dias (27/04): ~32% do ano (117/365)
+    const esperado = 32.05;
+
+    if (taxa > esperado * 1.2) return PALETA.acento;       // acelerado (>38%)
+    if (taxa < esperado * 0.8) return PALETA.positivo;     // desacelerado (<26%)
+    return PALETA.neutro2;                                  // normal
   });
 
   const series = lista.map((x, i) => ({
@@ -922,7 +998,7 @@ function chartTrajetoria() {
     type: 'line',
     data: [
       [0, x.e25],
-      [1, x.p26],
+      [1, x.e26],
     ],
     symbol: 'circle', symbolSize: 8,
     lineStyle: { width: 2, color: cores[i] },
@@ -946,10 +1022,10 @@ function chartTrajetoria() {
              axisLabel: { ...TEMA_BASE.yAxis.axisLabel,
                           formatter: v => v >= 1e6 ? 'R$ ' + (v/1e6).toFixed(1)+' M' : '' } },
     graphic: [
-      { type: 'text', left: '12%', top: 5,
-        style: { text: '2025 (fechado)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
-      { type: 'text', left: '52%', top: 5,
-        style: { text: '2026 (projetado)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
+      { type: 'text', left: '10%', top: 5,
+        style: { text: '2025 (ano fechado)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
+      { type: 'text', left: '42%', top: 5,
+        style: { text: '2026 (até 27/04 — 32% do ano / 117 dias)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
     ],
     tooltip: {
       trigger: 'item',
@@ -957,7 +1033,8 @@ function chartTrajetoria() {
       textStyle: { color: PALETA.texto },
       formatter: p => {
         const x = lista[series.indexOf(series.find(s => s.name === p.seriesName))];
-        return `<b>${x.cat}</b><br>2025: R$ ${fmtBRL(x.e25)}<br>2026 proj: R$ ${fmtBRL(x.p26)}`;
+        const taxa = (x.e26 / x.e25 * 100).toFixed(1);
+        return `<b>${x.cat}</b><br>2025: R$ ${fmtBRL(x.e25)}<br>2026 (117 dias): R$ ${fmtBRL(x.e26)}<br><span style="color:${PALETA.textoSuave}">Taxa: ${taxa}% (esperado: ~32%)</span>`;
       }
     },
     series: series,
@@ -1069,6 +1146,7 @@ function tabelaConsolidada() {
 window.addEventListener('DOMContentLoaded', () => {
   chartComposicao();
   chartCascata();
+  tabelaCascata();
   chartExecucaoDespesas();
   chartGruposAdmin();
   chartFixas();
