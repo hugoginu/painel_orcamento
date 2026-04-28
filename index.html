@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Quadro Orçamentário UFG — 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  /* ============================================================
+     Cole Knaflic — "Storytelling com Dados"
+     Princípios:
+     - Tipografia clean (sans-serif), peso variável, hierarquia clara
+     - Paleta dessaturada: cinzas para baselines, UM acento estratégico
+     - Chart junk = zero: sem grids pesadas, sem bordas, sem 3D
+     - Anotações DIRETAS no gráfico
+     - Espaço em branco generoso
+     ============================================================ */
+  :root {
+    --texto:        #2A3F54;     /* azul-petróleo escuro institucional */
+    --texto-suave:  #6B7785;
+    --texto-fraco:  #A4ADB6;
+    --linha-sutil:  #E8EBEF;
+    --fundo:        #FFFFFF;
+    --fundo-card:   #F8F9FB;
+
+    --neutro-1:     #C7CDD3;
+    --neutro-2:     #9AA4AF;
+    --neutro-3:     #6B7785;
+
+    --acento:       #C8102E;     /* vermelho UFG — usar APENAS no que importa */
+    --acento-suave: #FBE3E7;
+    --positivo:     #2C7FB8;     /* azul para "orçamento livre" */
+    --positivo-suave:#DCE8F2;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--texto);
+    background: var(--fundo);
+    -webkit-font-smoothing: antialiased;
+  }
+  body { line-height: 1.5; font-size: 16px; }
+
+  .pagina {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+  }
+
+  /* ----- Cabeçalho ----- */
+  header.topo {
+    border-bottom: 1px solid var(--linha-sutil);
+    padding-bottom: 28px;
+    margin-bottom: 56px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 38px; font-weight: 700;
+    margin: 0 0 8px; color: var(--texto);
+    line-height: 1.15;
+  }
+  .subtitulo {
+    font-size: 17px; color: var(--texto-suave); margin: 0;
+    font-weight: 400;
+  }
+  .meta {
+    margin-top: 18px; font-size: 13px; color: var(--texto-fraco);
+  }
+
+  /* ----- Seções ----- */
+  section { margin-bottom: 80px; }
+  section .titulo-secao {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--texto-fraco);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  section h2 {
+    font-size: 26px; font-weight: 600;
+    margin: 0 0 12px; color: var(--texto);
+    line-height: 1.25;
+  }
+  section h2 strong {
+    color: var(--acento);
+    font-weight: 700;
+  }
+  section h2.azul strong { color: var(--positivo); }
+  section .lead {
+    font-size: 15px; color: var(--texto-suave);
+    margin: 0 0 32px; max-width: 760px;
+  }
+
+  /* ----- KPIs ----- */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .kpis-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .kpi {
+    padding: 22px 24px;
+    background: var(--fundo-card);
+    border-radius: 6px;
+    border-left: 3px solid var(--neutro-1);
+  }
+  .kpi.destaque { border-left-color: var(--acento); }
+  .kpi.positivo  { border-left-color: var(--positivo); }
+  .kpi .rotulo {
+    font-size: 12px;
+    color: var(--texto-suave);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .kpi .valor {
+    font-size: 28px; font-weight: 700; color: var(--texto);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .kpi .valor .un {
+    font-size: 14px; font-weight: 500; color: var(--texto-suave);
+    margin-left: 4px;
+  }
+  .kpi .nota {
+    margin-top: 6px; font-size: 12px; color: var(--texto-fraco);
+  }
+
+  /* ----- Containers de gráfico ----- */
+  .chart {
+    width: 100%;
+    background: var(--fundo);
+  }
+  .chart-tall  { height: 460px; }
+  .chart-mid   { height: 380px; }
+  .chart-short { height: 320px; }
+
+  .anotacao {
+    font-size: 13px; color: var(--texto-suave);
+    margin-top: 10px; max-width: 720px;
+    border-left: 2px solid var(--linha-sutil);
+    padding-left: 14px;
+  }
+
+  /* ----- Badge de terceirização ----- */
+  .badge-terceirizado {
+    display: inline-block;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+
+  /* ----- Tabela enxuta ----- */
+  table.dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  table.dados th, table.dados td {
+    text-align: right;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--linha-sutil);
+  }
+  table.dados th { font-weight: 600; color: var(--texto-suave); font-size: 12px;
+                   letter-spacing: 0.04em; text-transform: uppercase; }
+  table.dados td.cat { text-align: left; color: var(--texto); font-weight: 500; }
+  table.dados tr.total td { font-weight: 700; border-top: 2px solid var(--texto);
+                             border-bottom: none; padding-top: 14px; }
+
+  /* ----- Rodapé ----- */
+  footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--linha-sutil);
+    font-size: 12px;
+    color: var(--texto-fraco);
+    line-height: 1.6;
+  }
+
+  @media print {
+    .pagina { max-width: 100%; padding: 24px; }
+    section { page-break-inside: avoid; }
+  }
+  @media (max-width: 1000px) {
+    .kpis-5 { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .kpis, .kpis-5 { grid-template-columns: repeat(2, 1fr); }
+    .pagina { padding: 32px 20px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pagina">
+
+  <header class="topo">
+    <p class="eyebrow">Pró-Reitoria de Administração e Finanças · UFG</p>
+    <h1>Quadro Orçamentário 2026</h1>
+    <p class="subtitulo">O que já temos, o que está comprometido e o que sobra para gerir.</p>
+    <p class="meta">Apresentação à Alta Administração · Dados SIOP de 27/04/2026 · Execução até abril/2026</p>
+  </header>
+
+  <!-- ===================== SEÇÃO 1: PANORAMA ===================== -->
+  <section id="panorama">
+    <p class="titulo-secao">Panorama</p>
+    <h2>Em 2026, a UFG tem <strong>R$ 1,72 bilhões</strong> de orçamento autorizado.</h2>
+    <p class="lead">Cresceu 8,1% em relação a 2025 — mas crescimento não significa folga. Quase tudo já tem destinatário.</p>
+
+    <div class="kpis kpis-5">
+      <div class="kpi">
+        <div class="rotulo">Dotação 2026</div>
+        <div class="valor">R$ 1.724<span class="un">M</span></div>
+        <div class="nota">LOA + créditos</div>
+      </div>
+      <div class="kpi destaque">
+        <div class="rotulo">Pessoal e Encargos</div>
+        <div class="valor">R$ 1.493<span class="un">M</span></div>
+        <div class="nota">86,6% · obrigatório</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Custeio (OCC)</div>
+        <div class="valor">R$ 218,6<span class="un">M</span></div>
+        <div class="nota">12,7% do total</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Investimentos</div>
+        <div class="valor">R$ 12,1<span class="un">M</span></div>
+        <div class="nota">0,7% do total</div>
+      </div>
+      <div class="kpi positivo">
+        <div class="rotulo">Custeio Livre</div>
+        <div class="valor">R$ 111,8<span class="un">M</span></div>
+        <div class="nota">51,1% do custeio · onde a gestão atua</div>
+      </div>
+    </div>
+    <p class="anotacao">Pessoal consome <strong>86,6%</strong> do orçamento total e é integralmente compulsório.
+    O Custeio (OCC) tem <strong>R$ 218,6 M</strong>, mas grande parte já está comprometida com benefícios obrigatórios e vinculações finalísticas (PNAES, HVET, Educação Básica etc.). Sobra <strong>R$ 111,8 M de Custeio Livre</strong>. Investimentos somam <strong>R$ 12,1 M</strong> e são apresentados em seção própria.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 2: COMPOSIÇÃO ===================== -->
+  <section id="composicao">
+    <p class="titulo-secao">Composição</p>
+    <h2>Pessoal consome <strong>86,6%</strong>. Custeio e Investimentos dividem o restante.</h2>
+    <p class="lead">Como o orçamento se divide entre os três grupos de despesa nos exercícios de 2024, 2025 e 2026.</p>
+
+    <div id="chart-composicao" class="chart chart-mid"></div>
+    <p class="anotacao">A proporção de Pessoal sobre o total <strong>cresceu</strong> nos últimos três exercícios, ampliando a pressão sobre o que pode ser efetivamente gerido — Custeio e Investimentos.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 3: CASCATA CUSTEIO → LIVRE ===================== -->
+  <section id="cascata">
+    <p class="titulo-secao">Do Custeio ao Custeio Livre</p>
+    <h2 class="azul">Dos R$ 218,6 M de Custeio, restam <strong>R$ 111,8 M livres</strong>.</h2>
+    <p class="lead">Vinculações finalísticas (em cinza), encargos compulsórios aos servidores (em cinza-escuro) e emendas parlamentares saem antes de a gestão poder decidir o uso.</p>
+
+    <div id="chart-cascata" class="chart chart-tall"></div>
+    <p class="anotacao">O Custeio Livre é a fração efetivamente discricionária — e é dele que saem despesas fixas como energia, água, limpeza, vigilância, combustíveis e diárias.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 4: DESPESAS FIXAS ===================== -->
+  <section id="fixas">
+    <p class="titulo-secao">Despesas fixas em 2026</p>
+    <h2>As despesas fixas projetadas já comprometem <strong>42% do Custeio Livre</strong>.</h2>
+    <p class="lead">Empenhado até abril/2026 nas principais categorias de despesa fixa de manutenção. Comparativo com 2025 (ano fechado) à esquerda. <strong style="color: var(--acento);">Vermelho</strong> = serviços terceirizados.</p>
+
+    <div id="chart-fixas" class="chart chart-tall"></div>
+    <p class="anotacao">Categorias que se renovam todo exercício e que, na prática, consomem o Custeio Livre antes mesmo do ano avançar. <strong>Limpeza e conservação</strong> e <strong>Vigilância</strong> (em vermelho) são integralmente terceirizadas, representando R$ 4,6 M em despesa obrigatória. O ritmo de empenho até abril sinaliza o compromisso anual estimado.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 5: INVESTIMENTOS ===================== -->
+  <section id="investimentos">
+    <p class="titulo-secao">Investimentos</p>
+    <h2>Para investir em obras, equipamentos e mobiliário, a UFG dispõe de <strong>R$ 12,1 M</strong>.</h2>
+    <p class="lead">Apenas 0,7% do orçamento total. Empenhado até abril/2026: R$ 0,36 M (2,9%).</p>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="rotulo">Dotação Investimentos 2026</div>
+        <div class="valor">R$ 12,1<span class="un">milhões</span></div>
+        <div class="nota">Aquisição de equipamentos, mobiliário, obras, modernização</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Empenhado até abr/26</div>
+        <div class="valor">R$ 0,36<span class="un">milhões</span></div>
+        <div class="nota">2,9% da dotação de investimentos</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Investimentos 2025 (fechado)</div>
+        <div class="valor">R$ 13,1<span class="un">milhões</span></div>
+        <div class="nota">Para referência comparativa</div>
+      </div>
+    </div>
+    <p class="anotacao">Os investimentos comportam aquisição de equipamentos e materiais permanentes, mobiliário, reformas e adequações de estrutura física. O baixo volume relativo limita a capacidade de modernização da universidade — historicamente, esse grupo é reforçado por emendas parlamentares e descentralizações específicas ao longo do ano.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 5b: ANÁLISE POR GRUPO ADMINISTRATIVO ===================== -->
+  <section id="grupos-admin">
+    <p class="titulo-secao">Grupos Administrativos</p>
+    <h2>Como o Custeio se divide entre <strong>ENCARGOS COMPULSÓRIOS</strong>, <strong>VINCULAÇÕES FINALÍSTICAS</strong> e <strong>RECURSOS LIVRES</strong>.</h2>
+    <p class="lead">Cada grupo tem uma natureza diferente. Encargos e Vinculações já têm destinação carimbada. Apenas os Recursos Livres podem ser distribuídos livremente entre unidades.</p>
+
+    <div class="kpis kpis-5">
+      <div class="kpi destaque">
+        <div class="rotulo">Encargos Compulsórios</div>
+        <div class="valor">R$ 72,5<span class="un">M</span></div>
+        <div class="nota">33,2% · benefícios, contribuições</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Vinculações Finalísticas</div>
+        <div class="valor">R$ 34,4<span class="un">M</span></div>
+        <div class="nota">15,7% · PNAES, Educação Básica, HVET, outros</div>
+      </div>
+      <div class="kpi positivo">
+        <div class="rotulo">Custeio Livre</div>
+        <div class="valor">R$ 111,8<span class="un">M</span></div>
+        <div class="nota">51,1% · distribuível entre unidades</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Dotação Total Custeio</div>
+        <div class="valor">R$ 218,6<span class="un">M</span></div>
+        <div class="nota">100% · 2026</div>
+      </div>
+      <div class="kpi">
+        <div class="rotulo">Empenho até abr/26</div>
+        <div class="valor">R$ 109,7<span class="un">M</span></div>
+        <div class="nota">50,1% da dotação</div>
+      </div>
+    </div>
+
+    <div id="chart-grupos-admin" class="chart chart-tall"></div>
+    <p class="anotacao"><strong>Encargos Compulsórios</strong> (benefícios aos servidores, contribuições a entidades): R$ 72,5 M, integralmente obrigatórios. <strong>Vinculações Finalísticas</strong> (PNAES R$ 32,2 M, Educação Básica R$ 0,6 M, HVET R$ 0,2 M, Educação a Distância, Idiomas, Programa Incluir, PROMISAES): R$ 34,4 M, carimbados e intocáveis. <strong>Custeio Livre</strong>: R$ 111,8 M, efetivamente distribuível conforme prioridades administrativas.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 6: COMPARATIVO 2025 vs 2026 ===================== -->
+  <section id="trajetoria">
+    <p class="titulo-secao">Trajetória 2025 → 2026</p>
+    <h2>Como cada categoria de despesa fixa evoluiu entre os exercícios.</h2>
+    <p class="lead">Empenhado total de 2025 (ano fechado) e empenhado projetado de 2026 (extrapolação linear da execução até abril).</p>
+
+    <div id="chart-trajetoria" class="chart chart-tall"></div>
+    <p class="anotacao">A projeção 2026 considera o ritmo de empenho registrado nos primeiros quatro meses, mantido constante até dezembro. Serve como sinal de tendência, não como compromisso.</p>
+  </section>
+
+  <!-- ===================== SEÇÃO 7: TABELA CONSOLIDADA ===================== -->
+  <section id="tabela">
+    <p class="titulo-secao">Consolidado</p>
+    <h2>O quadro completo do Custeio 2026.</h2>
+    <p class="lead">Custeio total separado por bloco — vinculações finalísticas, encargos compulsórios, Custeio Livre. Em R$.</p>
+
+    <table class="dados" id="tabela-vincs"></table>
+  </section>
+
+  <footer>
+    Painel gerado em <span>27/04/2026 17:05</span> a partir de:<br>
+    · <code>dados_siop_27-04-2026.csv</code> (SIOP — 2024 a 2026)<br>
+    · <code>EXECUÇÃO ORÇAMENTÁRIA UFG - 2025.xlsx</code> e <code>EXECUÇÃO ORÇAMENTÁRIA UFG - 2026.xlsx</code> (Tesouro Gerencial UFG)<br>
+    Pró-Reitoria de Administração e Finanças · Universidade Federal de Goiás
+  </footer>
+
+</div>
+
+<script>
+/* ================================================================ */
+/*  Dados embutidos                                                  */
+/* ================================================================ */
+const DADOS = {"data_referencia": "27/04/2026", "gerado_em": "27/04/2026 17:05", "grupos_administrativos": {"2026": {"Encargos Compulsórios": {"dotacao": 72544794.0, "empenhado": 61748848.0, "tipo": "obrigacao", "itens": ["Benefícios obrigatórios aos servidores", "Assistência médica e odontológica", "Auxílio-moradia", "Benefícios de legislação especial", "Capacitação de servidores", "Contribuições a entidades (Andifes etc.)", "Benefício especial Lei 12.618"]}, "Vinculações Finalísticas": {"dotacao": 34418439.0, "empenhado": 10202894.0, "tipo": "vinculacao", "itens": ["PNAES", "Educação Básica", "HVET", "Educação a Distância", "Idiomas sem Fronteiras", "Programa Incluir", "PROMISAES"]}, "Custeio Livre": {"dotacao": 111784619.0, "empenhado": 37707504.0, "tipo": "livre", "itens": ["Despesas fixas de manutenção", "Funcionamento geral", "Distribuição entre unidades", "Bolsas e auxílios diversos"]}}}, "panorama": {"2024": {"ano": 2024, "dotacao_total": 1422272554.0, "dotacao_inicial": 1372801524.0, "empenhado_total": 1413254308.0, "liquidado_total": 1374093243.0, "pago_total": 1278041047.0, "pessoal": {"dotacao": 1218898935.0, "empenhado": 1211216757.0}, "custeio": {"dotacao": 191018414.0, "empenhado": 189684184.0}, "investimentos": {"dotacao": 12355205.0, "empenhado": 12353367.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 304812.0, "empenhado": 304812.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 206239.0, "empenhado": 206240.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 144304.0, "empenhado": 144304.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 615283.0, "empenhado": 615283.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 29925518.0, "empenhado": 29925517.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 43118208.0, "empenhado": 42929692.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 16930448.0, "empenhado": 15807171.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 20196.0, "empenhado": 19769.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 150000.0, "empenhado": 150000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 253043.0, "empenhado": 236757.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 99258827.0, "empenhado": 99253103.0}}, "2025": {"ano": 2025, "dotacao_total": 1594026938.0, "dotacao_inicial": 1404945923.0, "empenhado_total": 1590789062.0, "liquidado_total": 1569827831.0, "pago_total": 1424659570.0, "pessoal": {"dotacao": 1378786153.0, "empenhado": 1377438600.0}, "custeio": {"dotacao": 202109542.0, "empenhado": 200219798.0}, "investimentos": {"dotacao": 13131243.0, "empenhado": 13130664.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 60724.0, "empenhado": 60724.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 141463.0, "empenhado": 141463.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 71255.0, "empenhado": 71255.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 129998.0, "empenhado": 129998.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 641434.0, "empenhado": 641438.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 20281.0, "empenhado": 20281.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 28678825.0, "empenhado": 28678823.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 49096784.0, "empenhado": 48550830.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 19050784.0, "empenhado": 17710357.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 37011.0, "empenhado": 34601.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 25253.0, "empenhado": 24693.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 200000.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 239329.0, "empenhado": 238968.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 103716401.0, "empenhado": 103716367.0}}, "2026": {"ano": 2026, "dotacao_total": 1723790288.0, "dotacao_inicial": 1707155073.0, "empenhado_total": 1415817230.0, "liquidado_total": 375120793.0, "pago_total": 370618485.0, "pessoal": {"dotacao": 1493046739.0, "empenhado": 1305782773.0}, "custeio": {"dotacao": 218636063.0, "empenhado": 109678066.0}, "investimentos": {"dotacao": 12107486.0, "empenhado": 356391.0}, "deducoes": [{"nome": "HVET", "tipo": "vinculacao", "dotacao": 181372.0, "empenhado": 12755.0}, {"nome": "Programa Incluir", "tipo": "vinculacao", "dotacao": 138271.0, "empenhado": 76017.0}, {"nome": "Idiomas sem Fronteiras", "tipo": "vinculacao", "dotacao": 73709.0, "empenhado": 0.0}, {"nome": "PROMISAES", "tipo": "vinculacao", "dotacao": 321565.0, "empenhado": 70908.0}, {"nome": "Educação Básica", "tipo": "vinculacao", "dotacao": 588447.0, "empenhado": 378991.0}, {"nome": "Educação a Distância", "tipo": "vinculacao", "dotacao": 43979.0, "empenhado": 0.0}, {"nome": "PNAES", "tipo": "vinculacao", "dotacao": 32170391.0, "empenhado": 9664023.0}, {"nome": "Benefícios obrigatórios aos servidores", "tipo": "obrigacao", "dotacao": 54680995.0, "empenhado": 47005228.0}, {"nome": "Assistência médica e odontológica", "tipo": "obrigacao", "dotacao": 18124896.0, "empenhado": 14512761.0}, {"nome": "Auxílio-moradia", "tipo": "obrigacao", "dotacao": 36000.0, "empenhado": 4819.0}, {"nome": "Benefícios de legislação especial", "tipo": "obrigacao", "dotacao": 27858.0, "empenhado": 20000.0}, {"nome": "Capacitação de servidores", "tipo": "obrigacao", "dotacao": 200000.0, "empenhado": 16240.0}, {"nome": "Contribuições a entidades (Andifes etc.)", "tipo": "obrigacao", "dotacao": 263961.0, "empenhado": 208820.0}, {"nome": "Benefício especial Lei 12.618", "tipo": "obrigacao", "dotacao": 0.0, "empenhado": 0.0}, {"nome": "Emendas parlamentares", "tipo": "emenda", "dotacao": 0.0, "empenhado": 0.0}], "custeio_livre": {"dotacao": 111784619.0, "empenhado": 37707504.0}}}, "categorias": {"2025": {"Energia elétrica": {"empenhado": 9239932.75, "tesouro": 9239932.75, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 2859675.19, "tesouro": 2859675.19, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 12438505.809999999, "tesouro": 12438361.809999999, "pnaes": 144.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 11662051.09, "tesouro": 11662051.09, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 1608182.03, "tesouro": 1598381.97, "pnaes": 9800.06, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 194116.18, "tesouro": 194116.18, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 921870.23, "tesouro": 921870.23, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 3096232.51, "tesouro": 3071250.69, "pnaes": 24981.82, "terceirizado": false}, "Diárias": {"empenhado": 2201818.1599999997, "tesouro": 2201818.1599999997, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 1411565.78, "tesouro": 1411565.78, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 3267344.7600000002, "tesouro": 3241344.7600000002, "pnaes": 26000.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 3312369.7199999997, "tesouro": 3311409.6399999997, "pnaes": 960.08, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 6991614.17, "tesouro": 6630334.7700000005, "pnaes": 361279.4, "terceirizado": false}, "Mobiliário": {"empenhado": 401572.94, "tesouro": 391768.54, "pnaes": 9804.4, "terceirizado": false}}, "2026": {"Energia elétrica": {"empenhado": 1829668.64, "tesouro": 1829668.64, "pnaes": 0.0, "terceirizado": false}, "Água, esgoto e resíduos": {"empenhado": 504641.49, "tesouro": 504641.49, "pnaes": 0.0, "terceirizado": false}, "Limpeza e conservação (terceirizado)": {"empenhado": 1377405.0699999998, "tesouro": 1377405.0699999998, "pnaes": 0.0, "terceirizado": true}, "Vigilância (terceirizado)": {"empenhado": 3267710.54, "tesouro": 3267710.54, "pnaes": 0.0, "terceirizado": true}, "Combustíveis": {"empenhado": 324864.65, "tesouro": 324864.65, "pnaes": 0.0, "terceirizado": false}, "Telefonia e comunicação": {"empenhado": 42601.8, "tesouro": 42601.8, "pnaes": 0.0, "terceirizado": false}, "Locação de imóveis e bens": {"empenhado": 198098.03, "tesouro": 198098.03, "pnaes": 0.0, "terceirizado": false}, "Material de consumo": {"empenhado": 1356543.9200000002, "tesouro": 1356543.9200000002, "pnaes": 0.0, "terceirizado": false}, "Diárias": {"empenhado": 290454.97000000003, "tesouro": 290454.97000000003, "pnaes": 0.0, "terceirizado": false}, "Passagens": {"empenhado": 99805.43, "tesouro": 99805.43, "pnaes": 0.0, "terceirizado": false}, "Bolsas (Tesouro)": {"empenhado": 829740.0, "tesouro": 829740.0, "pnaes": 0.0, "terceirizado": false}, "Manutenção predial e equip.": {"empenhado": 1245862.75, "tesouro": 1245862.75, "pnaes": 0.0, "terceirizado": false}, "Equipamentos / Material permanente": {"empenhado": 75933.52, "tesouro": 75933.52, "pnaes": 0.0, "terceirizado": false}, "Mobiliário": {"empenhado": 26970.0, "tesouro": 26970.0, "pnaes": 0.0, "terceirizado": false}}}};
+
+/* ================================================================ */
+/*  Helpers de formatação                                            */
+/* ================================================================ */
+const fmtBRL = (v, d = 0) => new Intl.NumberFormat('pt-BR',
+  { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+const fmtMi = v => fmtBRL(v / 1e6, 1);
+const fmtPct = v => (v * 100).toFixed(1).replace('.', ',') + '%';
+
+const PALETA = {
+  texto:       '#2A3F54',
+  textoSuave:  '#6B7785',
+  textoFraco:  '#A4ADB6',
+  linhaSutil:  '#E8EBEF',
+  neutro1:     '#C7CDD3',
+  neutro2:     '#9AA4AF',
+  neutro3:     '#6B7785',
+  acento:      '#C8102E',
+  acentoSuave: '#FBE3E7',
+  positivo:    '#2C7FB8',
+  positivoSuave:'#DCE8F2',
+};
+
+/* Tema base ECharts — minimalismo Knaflic */
+const TEMA_BASE = {
+  textStyle: { fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+               color: PALETA.texto },
+  grid: { left: 8, right: 8, top: 30, bottom: 8, containLabel: true },
+  xAxis: {
+    axisLine:  { show: false },
+    axisTick:  { show: false },
+    splitLine: { lineStyle: { color: PALETA.linhaSutil, type: 'solid' } },
+    axisLabel: { color: PALETA.textoSuave, fontSize: 12 },
+  },
+  yAxis: {
+    axisLine:  { show: false },
+    axisTick:  { show: false },
+    splitLine: { show: false },
+    axisLabel: { color: PALETA.texto, fontSize: 13 },
+  },
+};
+
+/* ================================================================ */
+/*  GRÁFICO 1 — Composição por grupo de despesa (2024–2026)          */
+/* ================================================================ */
+function chartComposicao() {
+  const el = echarts.init(document.getElementById('chart-composicao'));
+  const anos = [2024, 2025, 2026];
+  const pess = anos.map(a => DADOS.panorama[a].pessoal.dotacao || DADOS.panorama[a].pessoal.empenhado);
+  const cust = anos.map(a => DADOS.panorama[a].custeio.dotacao);
+  const inv  = anos.map(a => DADOS.panorama[a].investimentos.dotacao);
+  const tots = anos.map((a,i) => pess[i] + cust[i] + inv[i]);
+
+  const pPess = pess.map((v,i) => v / tots[i]);
+  const pCust = cust.map((v,i) => v / tots[i]);
+  const pInv  = inv.map((v,i)  => v / tots[i]);
+
+  el.setOption({
+    ...TEMA_BASE,
+    grid: { left: 70, right: 80, top: 20, bottom: 60, containLabel: false },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: PALETA.linhaSutil,
+      textStyle: { color: PALETA.texto, fontSize: 13 },
+      formatter: params => {
+        const ano = params[0].axisValue;
+        const i = anos.indexOf(parseInt(ano));
+        let s = `<b>${ano}</b><br>`;
+        s += `Pessoal: R$ ${fmtMi(pess[i])} M  (${fmtPct(pPess[i])})<br>`;
+        s += `Custeio: R$ ${fmtMi(cust[i])} M  (${fmtPct(pCust[i])})<br>`;
+        s += `Investimentos: R$ ${fmtMi(inv[i])} M  (${fmtPct(pInv[i])})<br>`;
+        s += `<b>Total: R$ ${fmtMi(tots[i])} M</b>`;
+        return s;
+      }
+    },
+    yAxis: { ...TEMA_BASE.yAxis, type: 'category', data: anos.map(String), inverse: true,
+             axisLabel: { ...TEMA_BASE.yAxis.axisLabel, fontWeight: 600 } },
+    xAxis: { ...TEMA_BASE.xAxis, type: 'value', max: 1,
+             axisLabel: { ...TEMA_BASE.xAxis.axisLabel,
+                          formatter: v => Math.round(v*100)+'%' } },
+    series: [
+      { name: 'Pessoal e Encargos', type: 'bar', stack: 't',
+        data: pPess,
+        itemStyle: { color: PALETA.acento },
+        label: { show: true, position: 'inside', color: '#fff',
+                 fontWeight: 600, fontSize: 13,
+                 formatter: p => fmtPct(p.value) } },
+      { name: 'Custeio (OCC)', type: 'bar', stack: 't',
+        data: pCust,
+        itemStyle: { color: PALETA.neutro2 },
+        label: { show: true, position: 'inside', color: '#fff',
+                 fontWeight: 600, fontSize: 12,
+                 formatter: p => p.value > 0.04 ? fmtPct(p.value) : '' } },
+      { name: 'Investimentos', type: 'bar', stack: 't',
+        data: pInv,
+        itemStyle: { color: PALETA.neutro1 },
+        label: { show: true, position: 'right', color: PALETA.textoSuave,
+                 fontSize: 12, formatter: p => 'Inv ' + fmtPct(p.value) } },
+    ],
+    legend: {
+      bottom: 0, left: 'center',
+      icon: 'rect', itemWidth: 14, itemHeight: 10,
+      textStyle: { color: PALETA.textoSuave, fontSize: 12 },
+      data: [
+        { name: 'Pessoal e Encargos', itemStyle: { color: PALETA.acento } },
+        { name: 'Custeio (OCC)', itemStyle: { color: PALETA.neutro2 } },
+        { name: 'Investimentos', itemStyle: { color: PALETA.neutro1 } },
+      ]
+    }
+  });
+}
+
+/* ================================================================ */
+/*  GRÁFICO 2 — Cascata Custeio → Custeio Livre                       */
+/* ================================================================ */
+function chartCascata() {
+  const el = echarts.init(document.getElementById('chart-cascata'));
+  const p = DADOS.panorama[2026];
+  const inicio = p.custeio.dotacao;
+  const final  = p.custeio_livre.dotacao;
+
+  // Reordenar deduções: vinculações primeiro (cinza-claro), depois obrigações
+  // (cinza-escuro), por valor decrescente dentro de cada bloco.
+  const ded = p.deducoes.filter(d => d.dotacao > 0);
+  const vinc = ded.filter(d => d.tipo === 'vinculacao').sort((a,b) => b.dotacao - a.dotacao);
+  const obri = ded.filter(d => d.tipo === 'obrigacao').sort((a,b) => b.dotacao - a.dotacao);
+  const emen = ded.filter(d => d.tipo === 'emenda').sort((a,b) => b.dotacao - a.dotacao);
+  const ordem = [...vinc, ...obri, ...emen];
+
+  const cats = ['Custeio Total'];
+  ordem.forEach(d => cats.push(d.nome));
+  cats.push('Custeio Livre');
+
+  // Calcula bases (parte invisível) e valores
+  const dadosBase = [0]; // primeiro = chão
+  const dadosVal  = [inicio];
+  const cores     = [PALETA.neutro3];
+
+  let acc = inicio;
+  ordem.forEach(d => {
+    dadosBase.push(acc - d.dotacao);  // base invisível para flutuar a barra
+    dadosVal.push(d.dotacao);
+    let cor = PALETA.neutro1;
+    if (d.tipo === 'obrigacao') cor = PALETA.neutro2;
+    if (d.tipo === 'emenda')    cor = PALETA.acento;
+    cores.push(cor);
+    acc -= d.dotacao;
+  });
+  // Barra final: livre
+  dadosBase.push(0);
+  dadosVal.push(final);
+  cores.push(PALETA.positivo);
+
+  el.setOption({
+    ...TEMA_BASE,
+    grid: { left: 8, right: 30, top: 30, bottom: 90, containLabel: true },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: PALETA.linhaSutil,
+      textStyle: { color: PALETA.texto },
+      formatter: params => {
+        const i = params[0].dataIndex;
+        const cat = cats[i];
+        const val = dadosVal[i];
+        if (i === 0)
+          return `<b>${cat}</b><br>R$ ${fmtMi(val)} M`;
+        if (i === cats.length - 1)
+          return `<b>${cat}</b><br>R$ ${fmtMi(val)} M`;
+        const tipo = ordem[i-1].tipo;
+        const r = tipo === 'obrigacao' ? 'Encargo compulsório' :
+                  tipo === 'emenda'    ? 'Emenda parlamentar'  :
+                                          'Vinculação finalística';
+        return `${cat}<br><span style="color:${PALETA.textoSuave}">${r}</span><br>– R$ ${fmtMi(val)} M`;
+      }
+    },
+    xAxis: { ...TEMA_BASE.xAxis, type: 'category', data: cats,
+             axisLabel: { ...TEMA_BASE.xAxis.axisLabel,
+                          interval: 0, rotate: 35, fontSize: 11,
+                          formatter: v => v.length > 28 ? v.slice(0,26) + '…' : v } },
+    yAxis: { ...TEMA_BASE.yAxis, type: 'value',
+             axisLabel: { ...TEMA_BASE.yAxis.axisLabel,
+                          formatter: v => 'R$ ' + (v/1e6).toFixed(0) + ' M' },
+             splitLine: { show: true, lineStyle: { color: PALETA.linhaSutil } } },
+    series: [
+      { name: 'Base', type: 'bar', stack: 't',
+        data: dadosBase,
+        itemStyle: { color: 'transparent' },
+        emphasis: { disabled: true },
+        tooltip: { show: false } },
+      { name: 'Valor', type: 'bar', stack: 't',
+        data: dadosVal.map((v,i) => ({ value: v, itemStyle: { color: cores[i] } })),
+        label: {
+          show: true, position: 'top',
+          color: PALETA.texto, fontSize: 11, fontWeight: 600,
+          formatter: p => {
+            const i = p.dataIndex;
+            if (i === 0 || i === cats.length-1)
+              return 'R$ ' + fmtMi(dadosVal[i]) + ' M';
+            const v = dadosVal[i];
+            // suprime label de barras minúsculas para evitar sobreposição
+            if (v / inicio < 0.005) return '';
+            return v >= 1e6 ? '–' + fmtMi(v) + ' M'
+                            : '–' + (v/1e3).toFixed(0) + ' k';
+          }
+        }
+      },
+    ]
+  });
+}
+
+/* ================================================================ */
+/*  GRÁFICO 3 — Despesas fixas 2026 (com comparativo 2025)           */
+/* ================================================================ */
+function chartFixas() {
+  const el = echarts.init(document.getElementById('chart-fixas'));
+  const c26 = DADOS.categorias['2026'];
+  const c25 = DADOS.categorias['2025'];
+
+  // Filtra categorias do "core fixo" e ordena por empenho 2026
+  const lista = Object.entries(c26)
+                .map(([k,v]) => {
+                  const cat25 = c25[k] || (k.replace(' (terceirizado)', '') === 'Limpeza e conservação' ? c25['Limpeza e conservação'] : null) ||
+                                         (k.replace(' (terceirizado)', '') === 'Vigilância' ? c25['Vigilância'] : null);
+                  return {
+                    cat: k,
+                    e26: v.empenhado,
+                    e25: cat25 ? cat25.empenhado : 0,
+                    terceirizado: v.terceirizado || false
+                  };
+                })
+                .filter(x => x.e26 > 0 || x.e25 > 0)
+                .sort((a,b) => b.e26 - a.e26);
+
+  el.setOption({
+    ...TEMA_BASE,
+    grid: { left: 8, right: 130, top: 20, bottom: 30, containLabel: true },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: PALETA.linhaSutil,
+      textStyle: { color: PALETA.texto },
+      formatter: params => {
+        const cat = params[0].axisValue;
+        const e26 = params.find(p => p.seriesName === '2026 (até abr)').value;
+        const e25 = params.find(p => p.seriesName === '2025 (fechado)').value;
+        return `<b>${cat}</b><br>2025 (fechado): R$ ${fmtBRL(e25)}<br>2026 (até abr): R$ ${fmtBRL(e26)}`;
+      }
+    },
+    legend: {
+      bottom: 0, left: 'center',
+      icon: 'rect', itemWidth: 14, itemHeight: 10,
+      textStyle: { color: PALETA.textoSuave, fontSize: 12 },
+    },
+    yAxis: { ...TEMA_BASE.yAxis, type: 'category',
+             data: lista.map(x => x.cat), inverse: true,
+             axisLabel: { ...TEMA_BASE.yAxis.axisLabel, fontSize: 12,
+                         formatter: v => v.length > 30 ? v.slice(0,28)+'…' : v } },
+    xAxis: { ...TEMA_BASE.xAxis, type: 'value',
+             axisLabel: { ...TEMA_BASE.xAxis.axisLabel,
+                          formatter: v => v >= 1e6 ? (v/1e6).toFixed(1)+' M' :
+                                          v >= 1e3 ? (v/1e3).toFixed(0)+' k' : v } },
+    series: [
+      { name: '2025 (fechado)', type: 'bar',
+        data: lista.map(x => ({
+          value: x.e25,
+          itemStyle: { color: x.terceirizado ? PALETA.acentoSuave : PALETA.neutro1, opacity: x.terceirizado ? 0.6 : 1 }
+        })),
+        barGap: '0%', barCategoryGap: '38%',
+      },
+      { name: '2026 (até abr)', type: 'bar',
+        data: lista.map(x => ({
+          value: x.e26,
+          itemStyle: { color: x.terceirizado ? PALETA.acento : PALETA.neutro2, opacity: 1 }
+        })),
+        label: { show: true, position: 'right',
+                 color: PALETA.texto, fontSize: 12, fontWeight: 600,
+                 formatter: p => p.value > 0 ?
+                                  'R$ ' + (p.value >= 1e6 ?
+                                           (p.value/1e6).toFixed(2) + ' M' :
+                                           (p.value/1e3).toFixed(0) + ' k') : '' } },
+    ]
+  });
+}
+
+/* ================================================================ */
+/*  GRÁFICO 3b — Grupos Administrativos (Encargos, Vinculações, Livre) */
+/* ================================================================ */
+function chartGruposAdmin() {
+  const el = echarts.init(document.getElementById('chart-grupos-admin'));
+  const ga = DADOS.grupos_administrativos['2026'];
+  const grupos = Object.entries(ga).map(([nome, dados]) => ({
+    nome, ...dados
+  }));
+
+  const series = [
+    { name: 'Encargos/Vinculações (dotação)', data: [], color: PALETA.neutro1 },
+    { name: 'Encargos/Vinculações (empenhado)', data: [], color: PALETA.neutro3 },
+    { name: 'Custeio Livre (dotação)', data: [], color: PALETA.positivoSuave },
+    { name: 'Custeio Livre (empenhado)', data: [], color: PALETA.positivo },
+  ];
+
+  grupos.forEach(g => {
+    if (g.tipo === 'livre') {
+      series[0].data.push(0);
+      series[1].data.push(0);
+      series[2].data.push(g.dotacao);
+      series[3].data.push(g.empenhado);
+    } else {
+      series[0].data.push(g.dotacao);
+      series[1].data.push(g.empenhado);
+      series[2].data.push(0);
+      series[3].data.push(0);
+    }
+  });
+
+  el.setOption({
+    ...TEMA_BASE,
+    grid: { left: 70, right: 30, top: 30, bottom: 60, containLabel: true },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: PALETA.linhaSutil,
+      textStyle: { color: PALETA.texto },
+      formatter: params => {
+        const grupo = grupos[params[0].dataIndex];
+        let s = `<b>${grupo.nome}</b><br>`;
+        s += `Dotação: R$ ${fmtMi(grupo.dotacao)} M<br>`;
+        s += `Empenhado: R$ ${fmtMi(grupo.empenhado)} M<br>`;
+        const saldo = grupo.dotacao - grupo.empenhado;
+        s += `Saldo: R$ ${fmtMi(saldo)} M`;
+        return s;
+      }
+    },
+    xAxis: {
+      ...TEMA_BASE.xAxis,
+      type: 'category',
+      data: grupos.map(g => g.nome),
+      axisLabel: { ...TEMA_BASE.xAxis.axisLabel, interval: 0, rotate: 0, fontSize: 12 }
+    },
+    yAxis: {
+      ...TEMA_BASE.yAxis,
+      type: 'value',
+      axisLabel: { ...TEMA_BASE.yAxis.axisLabel,
+                   formatter: v => 'R$ ' + (v/1e6).toFixed(0) + ' M' },
+      splitLine: { show: true, lineStyle: { color: PALETA.linhaSutil } }
+    },
+    series: [
+      { name: 'Dotação', type: 'bar', stack: 'encargos',
+        data: series[0].data.map((v, i) => ({
+          value: v,
+          itemStyle: { color: v > 0 ? PALETA.neutro1 : 'transparent' }
+        })),
+        barGap: '20%' },
+      { name: 'Empenhado', type: 'bar', stack: 'encargos',
+        data: series[1].data.map((v, i) => ({
+          value: v,
+          itemStyle: { color: v > 0 ? PALETA.neutro2 : 'transparent' }
+        })),
+        label: { show: true, position: 'top', color: PALETA.textoSuave, fontSize: 11,
+                 formatter: p => p.value > 0 ? 'R$ ' + (p.value/1e6).toFixed(1) + ' M' : '' } },
+      { name: 'Livre (dotação)', type: 'bar', stack: 'livre',
+        data: series[2].data.map((v, i) => ({
+          value: v,
+          itemStyle: { color: v > 0 ? PALETA.positivoSuave : 'transparent' }
+        })),
+        barGap: '20%' },
+      { name: 'Livre (empenhado)', type: 'bar', stack: 'livre',
+        data: series[3].data.map((v, i) => ({
+          value: v,
+          itemStyle: { color: v > 0 ? PALETA.positivo : 'transparent' }
+        })),
+        label: { show: true, position: 'top', color: PALETA.positivo, fontSize: 11, fontWeight: 600,
+                 formatter: p => p.value > 0 ? 'R$ ' + (p.value/1e6).toFixed(1) + ' M' : '' } },
+    ],
+    legend: {
+      bottom: 0, left: 'center',
+      icon: 'rect', itemWidth: 14, itemHeight: 10,
+      textStyle: { color: PALETA.textoSuave, fontSize: 12 },
+    }
+  });
+}
+
+/* ================================================================ */
+/*  GRÁFICO 4 — Trajetória (slope) por categoria                     */
+/* ================================================================ */
+function chartTrajetoria() {
+  const el = echarts.init(document.getElementById('chart-trajetoria'));
+  const c26 = DADOS.categorias['2026'];
+  const c25 = DADOS.categorias['2025'];
+
+  // projeção linear simples: empenhado_até_abril * 12/4
+  const lista = Object.entries(c26)
+                .map(([k,v]) => {
+                  const cat25 = c25[k] || (k.replace(' (terceirizado)', '') === 'Limpeza e conservação' ? c25['Limpeza e conservação'] : null) ||
+                                         (k.replace(' (terceirizado)', '') === 'Vigilância' ? c25['Vigilância'] : null);
+                  return {
+                    cat: k,
+                    p26: v.empenhado * 3,       // projeção anual
+                    e25: cat25 ? cat25.empenhado : 0,
+                  };
+                })
+                .filter(x => x.e25 > 0 || x.p26 > 0)
+                .sort((a,b) => b.p26 - a.p26);
+
+  // slope chart: 2 colunas, conectadas por linhas
+  const cats = lista.map(x => x.cat);
+
+  const cores = lista.map(x => {
+    if (x.p26 > x.e25 * 1.15) return PALETA.acento;       // alta significativa
+    if (x.p26 < x.e25 * 0.85) return PALETA.positivo;     // queda
+    return PALETA.neutro2;
+  });
+
+  const series = lista.map((x, i) => ({
+    name: x.cat,
+    type: 'line',
+    data: [
+      [0, x.e25],
+      [1, x.p26],
+    ],
+    symbol: 'circle', symbolSize: 8,
+    lineStyle: { width: 2, color: cores[i] },
+    itemStyle: { color: cores[i] },
+    label: {
+      show: true,
+      formatter: p => p.dataIndex === 1 ? '  ' + x.cat : '',
+      color: cores[i], fontSize: 12, position: 'right', fontWeight: 500,
+    },
+    z: 5,
+  }));
+
+  el.setOption({
+    ...TEMA_BASE,
+    grid: { left: 80, right: 230, top: 30, bottom: 50, containLabel: false },
+    xAxis: { ...TEMA_BASE.xAxis,
+             type: 'value', min: -0.05, max: 1.05,
+             axisLabel: { show: false }, splitLine: { show: false },
+             axisLine: { show: false }, axisTick: { show: false } },
+    yAxis: { ...TEMA_BASE.yAxis, type: 'value',
+             axisLabel: { ...TEMA_BASE.yAxis.axisLabel,
+                          formatter: v => v >= 1e6 ? 'R$ ' + (v/1e6).toFixed(1)+' M' : '' } },
+    graphic: [
+      { type: 'text', left: '12%', top: 5,
+        style: { text: '2025 (fechado)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
+      { type: 'text', left: '52%', top: 5,
+        style: { text: '2026 (projetado)', fontSize: 12, fill: PALETA.textoSuave, fontWeight: 600 } },
+    ],
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: '#fff', borderColor: PALETA.linhaSutil,
+      textStyle: { color: PALETA.texto },
+      formatter: p => {
+        const x = lista[series.indexOf(series.find(s => s.name === p.seriesName))];
+        return `<b>${x.cat}</b><br>2025: R$ ${fmtBRL(x.e25)}<br>2026 proj: R$ ${fmtBRL(x.p26)}`;
+      }
+    },
+    series: series,
+  });
+}
+
+/* ================================================================ */
+/*  TABELA — Custeio 2026 segmentado                                 */
+/* ================================================================ */
+function tabelaVinculacoes() {
+  const t = document.getElementById('tabela-vincs');
+  const p = DADOS.panorama[2026];
+  const total = p.custeio.dotacao;
+
+  let html = '<thead><tr>';
+  html += '<th class="cat" style="text-align:left">Destinação</th>';
+  html += '<th>Dotação (R$)</th>';
+  html += '<th>Empenhado (R$)</th>';
+  html += '<th>% Exec</th>';
+  html += '<th>% Custeio</th></tr></thead><tbody>';
+
+  const blocos = [
+    { titulo: 'Vinculações finalísticas', tipo: 'vinculacao' },
+    { titulo: 'Encargos compulsórios',     tipo: 'obrigacao'  },
+    { titulo: 'Emendas parlamentares',     tipo: 'emenda'     },
+  ];
+
+  blocos.forEach(b => {
+    const itens = p.deducoes.filter(d => d.tipo === b.tipo);
+    if (itens.length === 0) return;
+    let dotBloco = 0, empBloco = 0;
+    html += `<tr style="background:${PALETA.fundo}"><td colspan="5" class="cat" style="padding-top:18px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:${PALETA.textoFraco};font-weight:700;border-bottom:none">${b.titulo}</td></tr>`;
+    itens.sort((a,b) => b.dotacao - a.dotacao).forEach(it => {
+      dotBloco += it.dotacao; empBloco += it.empenhado;
+      const exec = it.dotacao > 0 ? it.empenhado / it.dotacao : 0;
+      const peso = total > 0 ? it.dotacao / total : 0;
+      html += `<tr><td class="cat" style="padding-left:24px">${it.nome}</td>`;
+      html += `<td>${fmtBRL(it.dotacao)}</td>`;
+      html += `<td>${fmtBRL(it.empenhado)}</td>`;
+      html += `<td>${it.dotacao > 0 ? fmtPct(exec) : '—'}</td>`;
+      html += `<td>${fmtPct(peso)}</td></tr>`;
+    });
+    if (itens.length > 1) {
+      html += `<tr style="font-weight:600;color:${PALETA.textoSuave}"><td class="cat" style="padding-left:24px">Subtotal — ${b.titulo}</td>`;
+      html += `<td>${fmtBRL(dotBloco)}</td><td>${fmtBRL(empBloco)}</td>`;
+      html += `<td>${dotBloco > 0 ? fmtPct(empBloco/dotBloco) : '—'}</td>`;
+      html += `<td>${fmtPct(dotBloco/total)}</td></tr>`;
+    }
+  });
+
+  // linha do livre
+  const livre = p.custeio_livre;
+  html += `<tr style="background:${PALETA.positivoSuave}"><td class="cat" style="color:${PALETA.positivo};font-weight:700">Custeio Livre</td>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtBRL(livre.dotacao)}</td>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtBRL(livre.empenhado)}</td>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${livre.dotacao>0?fmtPct(livre.empenhado/livre.dotacao):'—'}</td>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtPct(livre.dotacao/total)}</td></tr>`;
+
+  // total custeio
+  html += `<tr class="total"><td class="cat">Custeio Total (OCC)</td>`;
+  html += `<td>${fmtBRL(p.custeio.dotacao)}</td>`;
+  html += `<td>${fmtBRL(p.custeio.empenhado)}</td>`;
+  html += `<td>${fmtPct(p.custeio.empenhado/p.custeio.dotacao)}</td>`;
+  html += `<td>100,0%</td></tr>`;
+
+  html += '</tbody>';
+  t.innerHTML = html;
+}
+
+/* ================================================================ */
+/*  Inicialização                                                    */
+/* ================================================================ */
+window.addEventListener('DOMContentLoaded', () => {
+  chartComposicao();
+  chartCascata();
+  chartGruposAdmin();
+  chartFixas();
+  chartTrajetoria();
+  tabelaVinculacoes();
+
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.chart').forEach(d => {
+      const inst = echarts.getInstanceByDom(d);
+      if (inst) inst.resize();
+    });
+  });
+});
+</script>
+
+</body>
+</html>
