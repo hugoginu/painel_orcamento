@@ -367,10 +367,10 @@
   <!-- ===================== SEÇÃO 7: TABELA CONSOLIDADA ===================== -->
   <section id="tabela">
     <p class="titulo-secao">Consolidado</p>
-    <h2>O quadro completo do Custeio 2026.</h2>
-    <p class="lead">Custeio total separado por bloco — vinculações finalísticas, encargos compulsórios, Custeio Livre. Em R$.</p>
+    <h2>Orçamento 2026 — <strong>Custeio (OCC)</strong> e <strong>Capital</strong>.</h2>
+    <p class="lead">Divisão completa mostrando a natureza de cada gasto: custeio corrente vs. investimentos. Em R$.</p>
 
-    <table class="dados" id="tabela-vincs"></table>
+    <table class="dados" id="tabela-consolidada"></table>
   </section>
 
   <footer>
@@ -848,19 +848,24 @@ function chartTrajetoria() {
 }
 
 /* ================================================================ */
-/*  TABELA — Custeio 2026 segmentado                                 */
+/*  TABELA — Orçamento 2026 segmentado (Custeio + Capital)           */
 /* ================================================================ */
-function tabelaVinculacoes() {
-  const t = document.getElementById('tabela-vincs');
+function tabelaConsolidada() {
+  const t = document.getElementById('tabela-consolidada');
   const p = DADOS.panorama[2026];
-  const total = p.custeio.dotacao;
+  const totalCust = p.custeio.dotacao;
+  const totalInv = p.investimentos.dotacao;
+  const totalGeral = totalCust + totalInv;
 
   let html = '<thead><tr>';
   html += '<th class="cat" style="text-align:left">Destinação</th>';
   html += '<th>Dotação (R$)</th>';
   html += '<th>Empenhado (R$)</th>';
   html += '<th>% Exec</th>';
-  html += '<th>% Custeio</th></tr></thead><tbody>';
+  html += '<th>% do Total</th></tr></thead><tbody>';
+
+  // ========== SEÇÃO 1: CUSTEIO (OCC) ==========
+  html += `<tr style="background:${PALETA.positivo};color:#fff;font-weight:700"><td colspan="5" style="padding:12px 14px;font-size:13px;letter-spacing:.08em">CUSTEIO (OCC) — Despesas Correntes</td></tr>`;
 
   const blocos = [
     { titulo: 'Vinculações finalísticas', tipo: 'vinculacao' },
@@ -872,39 +877,70 @@ function tabelaVinculacoes() {
     const itens = p.deducoes.filter(d => d.tipo === b.tipo);
     if (itens.length === 0) return;
     let dotBloco = 0, empBloco = 0;
-    html += `<tr style="background:${PALETA.fundo}"><td colspan="5" class="cat" style="padding-top:18px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:${PALETA.textoFraco};font-weight:700;border-bottom:none">${b.titulo}</td></tr>`;
+    html += `<tr style="background:${PALETA.fundo}"><td colspan="5" class="cat" style="padding-top:12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:${PALETA.textoFraco};font-weight:700;border-bottom:none;padding-left:0">${b.titulo}</td></tr>`;
     itens.sort((a,b) => b.dotacao - a.dotacao).forEach(it => {
       dotBloco += it.dotacao; empBloco += it.empenhado;
       const exec = it.dotacao > 0 ? it.empenhado / it.dotacao : 0;
-      const peso = total > 0 ? it.dotacao / total : 0;
-      html += `<tr><td class="cat" style="padding-left:24px">${it.nome}</td>`;
-      html += `<td>${fmtBRL(it.dotacao)}</td>`;
-      html += `<td>${fmtBRL(it.empenhado)}</td>`;
-      html += `<td>${it.dotacao > 0 ? fmtPct(exec) : '—'}</td>`;
-      html += `<td>${fmtPct(peso)}</td></tr>`;
+      const peso = totalGeral > 0 ? it.dotacao / totalGeral : 0;
+      html += `<tr><td class="cat" style="padding-left:28px;font-size:13px">${it.nome}</td>`;
+      html += `<td style="font-size:13px">${fmtBRL(it.dotacao)}</td>`;
+      html += `<td style="font-size:13px">${fmtBRL(it.empenhado)}</td>`;
+      html += `<td style="font-size:13px">${it.dotacao > 0 ? fmtPct(exec) : '—'}</td>`;
+      html += `<td style="font-size:13px">${fmtPct(peso)}</td></tr>`;
     });
     if (itens.length > 1) {
-      html += `<tr style="font-weight:600;color:${PALETA.textoSuave}"><td class="cat" style="padding-left:24px">Subtotal — ${b.titulo}</td>`;
-      html += `<td>${fmtBRL(dotBloco)}</td><td>${fmtBRL(empBloco)}</td>`;
-      html += `<td>${dotBloco > 0 ? fmtPct(empBloco/dotBloco) : '—'}</td>`;
-      html += `<td>${fmtPct(dotBloco/total)}</td></tr>`;
+      const execBloco = dotBloco > 0 ? empBloco/dotBloco : 0;
+      const pesoBloco = totalGeral > 0 ? dotBloco/totalGeral : 0;
+      html += `<tr style="font-weight:600;color:${PALETA.textoSuave};background:${PALETA.fundo}"><td class="cat" style="padding-left:28px;font-size:12px">Subtotal — ${b.titulo}</td>`;
+      html += `<td style="font-size:12px">${fmtBRL(dotBloco)}</td><td style="font-size:12px">${fmtBRL(empBloco)}</td>`;
+      html += `<td style="font-size:12px">${fmtPct(execBloco)}</td>`;
+      html += `<td style="font-size:12px">${fmtPct(pesoBloco)}</td></tr>`;
     }
   });
 
-  // linha do livre
+  // Custeio Livre
   const livre = p.custeio_livre;
-  html += `<tr style="background:${PALETA.positivoSuave}"><td class="cat" style="color:${PALETA.positivo};font-weight:700">Custeio Livre</td>`;
+  const execLivre = livre.dotacao > 0 ? livre.empenhado/livre.dotacao : 0;
+  const pesoLivre = totalGeral > 0 ? livre.dotacao/totalGeral : 0;
+  html += `<tr style="background:${PALETA.positivoSuave}"><td class="cat" style="color:${PALETA.positivo};font-weight:700;padding-left:0">Custeio Livre</td>`;
   html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtBRL(livre.dotacao)}</td>`;
   html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtBRL(livre.empenhado)}</td>`;
-  html += `<td style="color:${PALETA.positivo};font-weight:700">${livre.dotacao>0?fmtPct(livre.empenhado/livre.dotacao):'—'}</td>`;
-  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtPct(livre.dotacao/total)}</td></tr>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtPct(execLivre)}</td>`;
+  html += `<td style="color:${PALETA.positivo};font-weight:700">${fmtPct(pesoLivre)}</td></tr>`;
 
-  // total custeio
-  html += `<tr class="total"><td class="cat">Custeio Total (OCC)</td>`;
-  html += `<td>${fmtBRL(p.custeio.dotacao)}</td>`;
-  html += `<td>${fmtBRL(p.custeio.empenhado)}</td>`;
-  html += `<td>${fmtPct(p.custeio.empenhado/p.custeio.dotacao)}</td>`;
-  html += `<td>100,0%</td></tr>`;
+  // Total Custeio
+  const execCust = p.custeio.dotacao > 0 ? p.custeio.empenhado/p.custeio.dotacao : 0;
+  const pesoCust = totalGeral > 0 ? p.custeio.dotacao/totalGeral : 0;
+  html += `<tr class="total"><td class="cat" style="color:${PALETA.positivo}">TOTAL CUSTEIO</td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtBRL(p.custeio.dotacao)}</td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtBRL(p.custeio.empenhado)}</td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtPct(execCust)}</td>`;
+  html += `<td style="color:${PALETA.positivo}">${fmtPct(pesoCust)}</td></tr>`;
+
+  // ========== SEÇÃO 2: CAPITAL (Investimentos) ==========
+  html += `<tr style="background:${PALETA.texto};color:#fff;font-weight:700"><td colspan="5" style="padding:12px 14px;font-size:13px;letter-spacing:.08em">CAPITAL — Investimentos</td></tr>`;
+
+  const execInv = p.investimentos.dotacao > 0 ? p.investimentos.empenhado/p.investimentos.dotacao : 0;
+  const pesoInv = totalGeral > 0 ? p.investimentos.dotacao/totalGeral : 0;
+  html += `<tr><td class="cat" style="padding-left:0">Aquisições e Obras</td>`;
+  html += `<td>${fmtBRL(p.investimentos.dotacao)}</td>`;
+  html += `<td>${fmtBRL(p.investimentos.empenhado)}</td>`;
+  html += `<td>${fmtPct(execInv)}</td>`;
+  html += `<td>${fmtPct(pesoInv)}</td></tr>`;
+
+  html += `<tr class="total"><td class="cat" style="color:${PALETA.texto}">TOTAL CAPITAL</td>`;
+  html += `<td style="color:${PALETA.texto}">${fmtBRL(p.investimentos.dotacao)}</td>`;
+  html += `<td style="color:${PALETA.texto}">${fmtBRL(p.investimentos.empenhado)}</td>`;
+  html += `<td style="color:${PALETA.texto}">${fmtPct(execInv)}</td>`;
+  html += `<td style="color:${PALETA.texto}">${fmtPct(pesoInv)}</td></tr>`;
+
+  // ========== TOTAL GERAL ==========
+  const execGeral = totalGeral > 0 ? (p.custeio.empenhado + p.investimentos.empenhado)/totalGeral : 0;
+  html += `<tr class="total" style="border-top:3px solid ${PALETA.texto};font-size:14px"><td class="cat"><strong>ORÇAMENTO TOTAL 2026</strong></td>`;
+  html += `<td><strong>${fmtBRL(totalGeral)}</strong></td>`;
+  html += `<td><strong>${fmtBRL(p.custeio.empenhado + p.investimentos.empenhado)}</strong></td>`;
+  html += `<td><strong>${fmtPct(execGeral)}</strong></td>`;
+  html += `<td><strong>100,0%</strong></td></tr>`;
 
   html += '</tbody>';
   t.innerHTML = html;
@@ -919,7 +955,7 @@ window.addEventListener('DOMContentLoaded', () => {
   chartGruposAdmin();
   chartFixas();
   chartTrajetoria();
-  tabelaVinculacoes();
+  tabelaConsolidada();
 
   window.addEventListener('resize', () => {
     document.querySelectorAll('.chart').forEach(d => {
